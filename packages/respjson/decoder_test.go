@@ -3,10 +3,11 @@ package respjson_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/crowdstrike/aidr-go/internal/apijson"
-	rj "github.com/crowdstrike/aidr-go/packages/respjson"
 	"reflect"
 	"testing"
+
+	"github.com/crowdstrike/aidr-go/internal/apijson"
+	rj "github.com/crowdstrike/aidr-go/packages/respjson"
 )
 
 type UnionOfStringIntOrObject struct {

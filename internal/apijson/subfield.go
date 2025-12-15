@@ -1,8 +1,9 @@
 package apijson
 
 import (
-	"github.com/crowdstrike/aidr-go/packages/respjson"
 	"reflect"
+
+	"github.com/crowdstrike/aidr-go/packages/respjson"
 )
 
 func getSubField(root reflect.Value, index []int, name string) reflect.Value {

@@ -2,8 +2,9 @@ package apijson
 
 import (
 	"errors"
-	"github.com/crowdstrike/aidr-go/packages/param"
 	"reflect"
+
+	"github.com/crowdstrike/aidr-go/packages/param"
 
 	"github.com/tidwall/gjson"
 )

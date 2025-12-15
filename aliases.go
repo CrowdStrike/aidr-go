@@ -6,7 +6,7 @@ import (
 )
 
 // aliased to make [param.APIUnion] private when embedding
-type paramUnion = param.APIUnion
+type paramUnion = param.APIUnion //nolint:unused
 
 // aliased to make [param.APIObject] private when embedding
 type paramObj = param.APIObject

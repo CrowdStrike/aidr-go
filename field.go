@@ -22,7 +22,7 @@ func FloatPtr(v float64) *float64    { return &v }
 func StringPtr(v string) *string     { return &v }
 func TimePtr(v time.Time) *time.Time { return &v }
 
-func File(rdr io.Reader, filename string, contentType string) file {
+func File(rdr io.Reader, filename, contentType string) file {
 	return file{rdr, filename, contentType}
 }
 

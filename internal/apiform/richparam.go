@@ -1,9 +1,10 @@
 package apiform
 
 import (
-	"github.com/crowdstrike/aidr-go/packages/param"
 	"mime/multipart"
 	"reflect"
+
+	"github.com/crowdstrike/aidr-go/packages/param"
 )
 
 func (e *encoder) newRichFieldTypeEncoder(t reflect.Type) encoderFunc {

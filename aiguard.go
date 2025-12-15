@@ -34,7 +34,7 @@ func NewAIGuardService(opts ...option.RequestOption) (r AIGuardService) {
 		ServiceName: "aiguard",
 	}
 	r.Options = opts
-	return
+	return r
 }
 
 // Will retrieve the result, or will return 202 if the original request is still in
@@ -44,11 +44,11 @@ func (r *AIGuardService) GetAsyncRequest(ctx context.Context, requestID string, 
 	opts = append(opts, option.WithServiceName(r.ServiceName))
 	if requestID == "" {
 		err = errors.New("missing required requestId parameter")
-		return
+		return res, err
 	}
 	path := fmt.Sprintf("request/%s", requestID)
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Analyze and redact content to avoid manipulation of the model, addition of
@@ -58,7 +58,7 @@ func (r *AIGuardService) GuardChatCompletions(ctx context.Context, body AIGuardG
 	opts = append(opts, option.WithServiceName(r.ServiceName))
 	path := "v1/guard_chat_completions"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Pangea standard response schema
@@ -121,6 +121,7 @@ type AIGuardGetAsyncRequestResponse struct {
 
 // Returns the unmodified JSON received from the API
 func (r AIGuardGetAsyncRequestResponse) RawJSON() string { return r.JSON.raw }
+
 func (r *AIGuardGetAsyncRequestResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -186,6 +187,7 @@ type AIGuardGuardChatCompletionsResponse struct {
 
 // Returns the unmodified JSON received from the API
 func (r AIGuardGuardChatCompletionsResponse) RawJSON() string { return r.JSON.raw }
+
 func (r *AIGuardGuardChatCompletionsResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -222,6 +224,7 @@ type AIGuardGuardChatCompletionsResponseResult struct {
 
 // Returns the unmodified JSON received from the API
 func (r AIGuardGuardChatCompletionsResponseResult) RawJSON() string { return r.JSON.raw }
+
 func (r *AIGuardGuardChatCompletionsResponseResult) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -255,6 +258,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectors struct {
 
 // Returns the unmodified JSON received from the API
 func (r AIGuardGuardChatCompletionsResponseResultDetectors) RawJSON() string { return r.JSON.raw }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectors) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -275,6 +279,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsCode struct {
 
 // Returns the unmodified JSON received from the API
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsCode) RawJSON() string { return r.JSON.raw }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsCode) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -297,6 +302,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsCodeData struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsCodeData) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsCodeData) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -319,6 +325,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsCompetitors struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsCompetitors) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsCompetitors) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -342,6 +349,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsCompetitorsData struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsCompetitorsData) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsCompetitorsData) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -364,6 +372,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsConfidentialAndPiiEntity 
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsConfidentialAndPiiEntity) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsConfidentialAndPiiEntity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -384,6 +393,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsConfidentialAndPiiEntityD
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsConfidentialAndPiiEntityData) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsConfidentialAndPiiEntityData) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -409,6 +419,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsConfidentialAndPiiEntityD
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsConfidentialAndPiiEntityDataEntity) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsConfidentialAndPiiEntityDataEntity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -431,6 +442,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntity struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntity) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -451,6 +463,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntityData struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntityData) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntityData) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -476,6 +489,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntityDataEntity st
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntityDataEntity) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntityDataEntity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -498,6 +512,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsLanguage struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsLanguage) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsLanguage) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -520,6 +535,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsLanguageData struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsLanguageData) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsLanguageData) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -542,6 +558,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousEntity struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousEntity) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousEntity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -562,6 +579,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousEntityData struc
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousEntityData) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousEntityData) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -586,6 +604,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousEntityDataEntity
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousEntityDataEntity) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousEntityDataEntity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -608,6 +627,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousPrompt struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousPrompt) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousPrompt) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -631,6 +651,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousPromptData struc
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousPromptData) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousPromptData) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -651,6 +672,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousPromptDataAnalyz
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousPromptDataAnalyzerResponse) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousPromptDataAnalyzerResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -673,6 +695,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsSecretAndKeyEntity struct
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsSecretAndKeyEntity) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsSecretAndKeyEntity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -693,6 +716,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsSecretAndKeyEntityData st
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsSecretAndKeyEntityData) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsSecretAndKeyEntityData) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -718,6 +742,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsSecretAndKeyEntityDataEnt
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsSecretAndKeyEntityDataEntity) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsSecretAndKeyEntityDataEntity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -738,6 +763,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsTopic struct {
 
 // Returns the unmodified JSON received from the API
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsTopic) RawJSON() string { return r.JSON.raw }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsTopic) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -761,6 +787,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsTopicData struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsTopicData) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsTopicData) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -781,6 +808,7 @@ type AIGuardGuardChatCompletionsResponseResultDetectorsTopicDataTopic struct {
 func (r AIGuardGuardChatCompletionsResponseResultDetectorsTopicDataTopic) RawJSON() string {
 	return r.JSON.raw
 }
+
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsTopicDataTopic) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -834,6 +862,7 @@ func (r AIGuardGuardChatCompletionsParams) MarshalJSON() (data []byte, err error
 	type shadow AIGuardGuardChatCompletionsParams
 	return param.MarshalObject(r, (*shadow)(&r))
 }
+
 func (r *AIGuardGuardChatCompletionsParams) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -875,6 +904,7 @@ func (r AIGuardGuardChatCompletionsParamsExtraInfo) MarshalJSON() (data []byte, 
 	type shadow AIGuardGuardChatCompletionsParamsExtraInfo
 	return param.MarshalWithExtras(r, (*shadow)(&r), r.ExtraFields)
 }
+
 func (r *AIGuardGuardChatCompletionsParamsExtraInfo) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
@@ -891,6 +921,7 @@ func (r AIGuardGuardChatCompletionsParamsExtraInfoMcpTool) MarshalJSON() (data [
 	type shadow AIGuardGuardChatCompletionsParamsExtraInfoMcpTool
 	return param.MarshalObject(r, (*shadow)(&r))
 }
+
 func (r *AIGuardGuardChatCompletionsParamsExtraInfoMcpTool) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }

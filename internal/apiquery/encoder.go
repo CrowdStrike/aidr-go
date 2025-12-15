@@ -103,7 +103,7 @@ func (e *encoder) newTypeEncoder(t reflect.Type) encoderFunc {
 		encoder := e.typeEncoder(t.Elem())
 		return func(key string, value reflect.Value) (pairs []Pair, err error) {
 			if !value.IsValid() || value.IsNil() {
-				return
+				return pairs, err
 			}
 			return encoder(key, value.Elem())
 		}
@@ -193,7 +193,7 @@ func (e *encoder) newStructTypeEncoder(t reflect.Type) encoderFunc {
 
 	return func(key string, value reflect.Value) (pairs []Pair, err error) {
 		for _, ef := range encoderFields {
-			var subkey string = e.renderKeyPath(key, ef.tag.name)
+			subkey := e.renderKeyPath(key, ef.tag.name)
 			if ef.tag.inline {
 				subkey = key
 			}
@@ -205,7 +205,7 @@ func (e *encoder) newStructTypeEncoder(t reflect.Type) encoderFunc {
 			}
 			pairs = append(pairs, subpairs...)
 		}
-		return
+		return pairs, err
 	}
 }
 
@@ -252,15 +252,15 @@ func (e *encoder) newMapEncoder(t reflect.Type) encoderFunc {
 			keyPath := e.renderKeyPath(key, subkey)
 			subpairs, suberr := elementEncoder(keyPath, iter.Value())
 			if suberr != nil {
-				err = suberr
+				err = suberr //nolint:ineffassign,staticcheck
 			}
 			pairs = append(pairs, subpairs...)
 		}
-		return
+		return pairs, err
 	}
 }
 
-func (e *encoder) renderKeyPath(key string, subkey string) string {
+func (e *encoder) renderKeyPath(key, subkey string) string {
 	if len(key) == 0 {
 		return subkey
 	}
@@ -300,7 +300,7 @@ func (e *encoder) newArrayTypeEncoder(t reflect.Type) encoderFunc {
 				}
 				pairs = append(pairs, subpairs...)
 			}
-			return
+			return pairs, err
 		}
 	case ArrayQueryFormatIndices:
 		panic("The array indices format is not supported yet")
@@ -315,7 +315,7 @@ func (e *encoder) newArrayTypeEncoder(t reflect.Type) encoderFunc {
 				}
 				pairs = append(pairs, subpairs...)
 			}
-			return
+			return pairs, err
 		}
 	default:
 		panic(fmt.Sprintf("Unknown ArrayFormat value: %d", e.settings.ArrayFormat))
@@ -372,7 +372,7 @@ func (e *encoder) newPrimitiveTypeEncoder(t reflect.Type) encoderFunc {
 	}
 }
 
-func (e *encoder) newFieldTypeEncoder(t reflect.Type) encoderFunc {
+func (e *encoder) newFieldTypeEncoder(t reflect.Type) encoderFunc { //nolint:unused
 	f, _ := t.FieldByName("Value")
 	enc := e.typeEncoder(f.Type)
 
@@ -411,5 +411,4 @@ func (e encoder) newInterfaceEncoder() encoderFunc {
 		}
 		return e.typeEncoder(value.Type())(key, value)
 	}
-
 }

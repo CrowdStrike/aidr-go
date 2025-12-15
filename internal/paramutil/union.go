@@ -2,8 +2,9 @@ package paramutil
 
 import (
 	"fmt"
-	"github.com/crowdstrike/aidr-go/packages/param"
 	"reflect"
+
+	"github.com/crowdstrike/aidr-go/packages/param"
 )
 
 var paramUnionType = reflect.TypeOf(param.APIUnion{})

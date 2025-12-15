@@ -6,7 +6,7 @@ import (
 )
 
 // Port copies over values from one struct to another struct.
-func Port(from any, to any) error {
+func Port(from, to any) error {
 	toVal := reflect.ValueOf(to)
 	fromVal := reflect.ValueOf(from)
 

@@ -19,5 +19,5 @@ type Field struct {
 // you must check `f.IsNull() && !f.IsMissing()`.
 func (j Field) IsNull() bool    { return j.status <= null }
 func (j Field) IsMissing() bool { return j.status == missing }
-func (j Field) IsInvalid() bool { return j.status == invalid }
+func (j Field) IsInvalid() bool { return j.status == invalid } //nolint:staticcheck
 func (j Field) Raw() string     { return j.raw }

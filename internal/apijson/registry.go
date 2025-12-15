@@ -12,8 +12,10 @@ type UnionVariant struct {
 	Type               reflect.Type
 }
 
-var unionRegistry = map[reflect.Type]unionEntry{}
-var unionVariants = map[reflect.Type]any{}
+var (
+	unionRegistry = map[reflect.Type]unionEntry{}
+	unionVariants = map[reflect.Type]any{}
+)
 
 type unionEntry struct {
 	discriminatorKey string

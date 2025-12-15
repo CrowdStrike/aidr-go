@@ -1,10 +1,10 @@
-// EDIT(begin): custom time marshaler
 package json
 
 import (
-	"github.com/crowdstrike/aidr-go/internal/encoding/json/shims"
 	"reflect"
 	"time"
+
+	"github.com/crowdstrike/aidr-go/internal/encoding/json/shims"
 )
 
 type TimeMarshaler interface {
@@ -51,11 +51,9 @@ func timeMarshalEncoder(e *encodeState, v reflect.Value, opts encOpts) bool {
 		e.Grow(len(b))
 		out := e.AvailableBuffer()
 		out, _ = appendCompact(out, b, opts.escapeHTML)
-		e.Buffer.Write(out)
+		e.Buffer.Write(out) //nolint:staticcheck
 		return true
 	}
 
 	return false
 }
-
-// EDIT(end)

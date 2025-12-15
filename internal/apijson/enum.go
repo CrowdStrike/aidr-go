@@ -15,7 +15,7 @@ import (
 
 type validationEntry struct {
 	field       reflect.StructField
-	required    bool
+	required    bool //nolint:unused
 	legalValues struct {
 		strings []string
 		// 1 represents true, 0 represents false, -1 represents either
@@ -24,10 +24,12 @@ type validationEntry struct {
 	}
 }
 
-type validatorFunc func(reflect.Value) exactness
+type validatorFunc func(reflect.Value) exactness //nolint:unused
 
-var validators sync.Map
-var validationRegistry = map[reflect.Type][]validationEntry{}
+var (
+	validators         sync.Map //nolint:unused
+	validationRegistry = map[reflect.Type][]validationEntry{}
+)
 
 func RegisterFieldValidator[T any, V string | bool | int](fieldName string, values ...V) {
 	var t T
@@ -111,9 +113,9 @@ func (state *decoderState) validateBool(v reflect.Value) {
 		return
 	}
 	b := v.Bool()
-	if state.validator.legalValues.bools == 1 && b == false {
+	if state.validator.legalValues.bools == 1 && !b {
 		state.exactness = loose
-	} else if state.validator.legalValues.bools == 0 && b == true {
+	} else if state.validator.legalValues.bools == 0 && b {
 		state.exactness = loose
 	}
 }
