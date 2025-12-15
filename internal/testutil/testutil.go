@@ -9,7 +9,7 @@ import (
 
 func CheckTestServer(t *testing.T, url string) bool {
 	if _, err := http.Get(url); err != nil {
-		const SKIP_MOCK_TESTS = "SKIP_MOCK_TESTS"
+		const SKIP_MOCK_TESTS = "SKIP_MOCK_TESTS" //nolint:staticcheck
 		if str, ok := os.LookupEnv(SKIP_MOCK_TESTS); ok {
 			skip, err := strconv.ParseBool(str)
 			if err != nil {

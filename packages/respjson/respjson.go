@@ -65,10 +65,12 @@ type status int8
 // is an unexpected type.
 func (j Field) Valid() bool { return j.status > invalid }
 
-const Null string = "null"
-const Omitted string = ""
+const (
+	Null    string = "null"
+	Omitted string = ""
+)
 
-// Returns the raw JSON value of the field.
+// Raw returns the raw JSON value of the field.
 func (j Field) Raw() string {
 	if j.status == omitted {
 		return ""

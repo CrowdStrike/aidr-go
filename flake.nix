@@ -16,6 +16,7 @@
         pkgs.mkShellNoCC {
           packages = with pkgs; [
             go
+            golangci-lint
             pnpm
           ];
 

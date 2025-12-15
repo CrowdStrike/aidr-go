@@ -308,7 +308,7 @@ type almostOpt struct{}
 
 func (almostOpt) Valid() bool  { return true }
 func (almostOpt) Null() bool   { return false }
-func (almostOpt) isZero() bool { return false }
+func (almostOpt) isZero() bool { return false } //nolint:unused
 
 func (almostOpt) implOpt() {}
 

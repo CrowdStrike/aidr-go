@@ -2,9 +2,10 @@ package apijson_test
 
 import (
 	"encoding/json"
+	"testing"
+
 	"github.com/crowdstrike/aidr-go/internal/apijson"
 	"github.com/crowdstrike/aidr-go/packages/respjson"
-	"testing"
 )
 
 type StructWithNullExtraField struct {

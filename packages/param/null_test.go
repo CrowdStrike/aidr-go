@@ -2,8 +2,9 @@ package param_test
 
 import (
 	"encoding/json"
-	"github.com/crowdstrike/aidr-go/packages/param"
 	"testing"
+
+	"github.com/crowdstrike/aidr-go/packages/param"
 )
 
 type Nullables struct {

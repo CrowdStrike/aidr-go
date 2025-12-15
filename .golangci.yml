@@ -1,0 +1,47 @@
+version: "2"
+
+output:
+  sort-order:
+    - file
+
+linters:
+  settings:
+    govet:
+      enable:
+        - nilness
+        - unusedwrite
+    staticcheck:
+      checks:
+        - all
+        - -SA5008
+        - -ST1023
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - dupl
+          - errcheck
+          - gocyclo
+          - gosec
+          - staticcheck
+          - unparam
+        path: _test\.go
+    paths:
+      - internal/encoding/json/decode.go
+      - internal/encoding/json/encode.go
+
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+  settings:
+    gofumpt:
+      extra-rules: true
+
+run:
+  timeout: 10m

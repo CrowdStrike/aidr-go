@@ -183,7 +183,7 @@ func (e *encoder) newArrayTypeEncoder(t reflect.Type) encoderFunc {
 	return func(value reflect.Value) ([]byte, error) {
 		json := []byte("[]")
 		for i := 0; i < value.Len(); i++ {
-			var value, err = itemEncoder(value.Index(i))
+			value, err := itemEncoder(value.Index(i))
 			if err != nil {
 				return nil, err
 			}
@@ -286,11 +286,11 @@ func (e *encoder) newStructTypeEncoder(t reflect.Type) encoderFunc {
 				return nil, err
 			}
 		}
-		return
+		return json, err
 	}
 }
 
-func (e *encoder) newFieldTypeEncoder(t reflect.Type) encoderFunc {
+func (e *encoder) newFieldTypeEncoder(t reflect.Type) encoderFunc { //nolint:unused
 	f, _ := t.FieldByName("Value")
 	enc := e.typeEncoder(f.Type)
 

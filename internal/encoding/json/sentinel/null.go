@@ -1,9 +1,10 @@
 package sentinel
 
 import (
-	"github.com/crowdstrike/aidr-go/internal/encoding/json/shims"
 	"reflect"
 	"sync"
+
+	"github.com/crowdstrike/aidr-go/internal/encoding/json/shims"
 )
 
 type cacheEntry struct {

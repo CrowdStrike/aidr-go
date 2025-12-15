@@ -1,8 +1,9 @@
 package apiquery
 
 import (
-	"github.com/crowdstrike/aidr-go/packages/param"
 	"reflect"
+
+	"github.com/crowdstrike/aidr-go/packages/param"
 )
 
 func (e *encoder) newRichFieldTypeEncoder(t reflect.Type) encoderFunc {

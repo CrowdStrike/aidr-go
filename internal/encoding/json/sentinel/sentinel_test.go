@@ -1,11 +1,12 @@
 package sentinel_test
 
 import (
-	"github.com/crowdstrike/aidr-go/internal/encoding/json/sentinel"
-	"github.com/crowdstrike/aidr-go/packages/param"
 	"reflect"
 	"slices"
 	"testing"
+
+	"github.com/crowdstrike/aidr-go/internal/encoding/json/sentinel"
+	"github.com/crowdstrike/aidr-go/packages/param"
 )
 
 type Pair struct {
