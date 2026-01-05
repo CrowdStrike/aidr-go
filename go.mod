@@ -1,6 +1,8 @@
 module github.com/crowdstrike/aidr-go
 
-go 1.25
+go 1.24
+
+toolchain go1.25.5
 
 require (
 	github.com/tidwall/gjson v1.18.0
