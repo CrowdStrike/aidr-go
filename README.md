@@ -10,7 +10,7 @@ go get github.com/crowdstrike/aidr-go
 
 ## Requirements
 
-Go v1.25 or higher.
+Go v1.24 or higher.
 
 ## Usage
 

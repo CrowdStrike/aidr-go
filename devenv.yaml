@@ -1,0 +1,5 @@
+inputs:
+  go-overlay:
+    url: github:purpleclay/go-overlay
+  nixpkgs:
+    url: github:cachix/devenv-nixpkgs/rolling
