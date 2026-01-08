@@ -61,6 +61,14 @@ func (r *AIGuardService) GuardChatCompletions(ctx context.Context, body AIGuardG
 	return res, err
 }
 
+// Decrypt or unredact fpe redactions
+func (r *AIGuardService) Unredact(ctx context.Context, body AIGuardUnredactParams, opts ...option.RequestOption) (res *AIGuardUnredactResponse, err error) {
+	opts = slices.Concat(r.Options, opts)
+	path := "v1/unredact"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return res, err
+}
+
 // Pangea standard response schema
 type AIGuardGetAsyncRequestResponse struct {
 	// A unique identifier assigned to each request made to the API. It is used to
@@ -923,5 +931,58 @@ func (r AIGuardGuardChatCompletionsParamsExtraInfoMcpTool) MarshalJSON() (data [
 }
 
 func (r *AIGuardGuardChatCompletionsParamsExtraInfoMcpTool) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type AIGuardUnredactParams struct {
+	// FPE context used to decrypt and unredact data
+	FpeContext string `json:"fpe_context,required" format:"base64"`
+	// Data to unredact
+	RedactedData any `json:"redacted_data,omitzero,required"`
+	paramObj
+}
+
+func (r AIGuardUnredactParams) MarshalJSON() (data []byte, err error) {
+	type shadow AIGuardUnredactParams
+	return param.MarshalObject(r, (*shadow)(&r))
+}
+
+func (r *AIGuardUnredactParams) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type AIGuardUnredactResponse struct {
+	Result AIGuardUnredactResponseResult `json:"result"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Result      respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+	PangeaResponse
+}
+
+// Returns the unmodified JSON received from the API
+func (r AIGuardUnredactResponse) RawJSON() string { return r.JSON.raw }
+
+func (r *AIGuardUnredactResponse) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type AIGuardUnredactResponseResult struct {
+	// The unredacted data
+	Data any `json:"data,required"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Data        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r AIGuardUnredactResponseResult) RawJSON() string { return r.JSON.raw }
+
+func (r *AIGuardUnredactResponseResult) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
