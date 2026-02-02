@@ -12,7 +12,7 @@ go get github.com/crowdstrike/aidr-go
 import (
 	"github.com/crowdstrike/aidr-go" // Imported as `aidr`.
 )
-````
+```
 
 ## Requirements
 
