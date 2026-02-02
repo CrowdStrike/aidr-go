@@ -8,6 +8,12 @@ Go SDK for CrowdStrike AIDR.
 go get github.com/crowdstrike/aidr-go
 ```
 
+```go
+import (
+	"github.com/crowdstrike/aidr-go" // Imported as `aidr`.
+)
+````
+
 ## Requirements
 
 Go v1.24 or higher.
@@ -142,3 +148,36 @@ client.AIGuard.GuardChatCompletions(
 	option.WithRequestTimeout(20*time.Second),
 )
 ```
+
+### Errors
+
+When the API returns a non-success status code, an error with type `*aidr.Error`
+is returned. This contains the `StatusCode`, `*http.Request`, and
+`*http.Response` values of the request, as well as the JSON of the error body
+(much like other response objects in the SDK).
+
+To handle errors, it's recommended to use the `errors.As` pattern:
+
+```go
+_, err := client.AIGuard.GuardChatCompletions(context.TODO(), aidr.AIGuardGuardChatCompletionsParams{
+	GuardInput: map[string]any{
+		"messages": []any{
+			map[string]any{
+				"role":    "user",
+				"content": "Your prompt here",
+			},
+		},
+	},
+})
+if err != nil {
+	var apierr *aidr.Error
+	if errors.As(err, &apierr) {
+		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request.
+		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response.
+	}
+	panic(err.Error()) // GET "/v1/guard_chat_completions": 400 Bad Request { ... }
+}
+```
+
+When other errors occur, they are returned unwrapped; for example, if HTTP
+transport fails, you might receive `*url.Error` wrapping `*net.OpError`.
