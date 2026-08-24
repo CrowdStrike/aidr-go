@@ -195,7 +195,9 @@ type AIGuardGuardChatCompletionsResponseResultDetectors struct {
 	Competitors              AIGuardGuardChatCompletionsResponseResultDetectorsCompetitors              `json:"competitors"`
 	ConfidentialAndPiiEntity AIGuardGuardChatCompletionsResponseResultDetectorsConfidentialAndPiiEntity `json:"confidential_and_pii_entity"`
 	CustomEntity             AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntity             `json:"custom_entity"`
+	Emoji                    AIGuardGuardChatCompletionsResponseResultDetectorsEmoji                    `json:"emoji"`
 	Language                 AIGuardGuardChatCompletionsResponseResultDetectorsLanguage                 `json:"language"`
+	McpValidation            AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidation            `json:"mcp_validation"`
 	MaliciousEntity          AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousEntity          `json:"malicious_entity"`
 	MaliciousPrompt          AIGuardGuardChatCompletionsResponseResultDetectorsMaliciousPrompt          `json:"malicious_prompt"`
 	SecretAndKeyEntity       AIGuardGuardChatCompletionsResponseResultDetectorsSecretAndKeyEntity       `json:"secret_and_key_entity"`
@@ -206,7 +208,9 @@ type AIGuardGuardChatCompletionsResponseResultDetectors struct {
 		Competitors              respjson.Field
 		ConfidentialAndPiiEntity respjson.Field
 		CustomEntity             respjson.Field
+		Emoji                    respjson.Field
 		Language                 respjson.Field
+		McpValidation            respjson.Field
 		MaliciousEntity          respjson.Field
 		MaliciousPrompt          respjson.Field
 		SecretAndKeyEntity       respjson.Field
@@ -454,6 +458,74 @@ func (r *AIGuardGuardChatCompletionsResponseResultDetectorsCustomEntityDataEntit
 	return apijson.UnmarshalRoot(data, r)
 }
 
+type AIGuardGuardChatCompletionsResponseResultDetectorsEmoji struct {
+	// Details about the detected emojis.
+	Data AIGuardGuardChatCompletionsResponseResultDetectorsEmojiData `json:"data"`
+	// Whether or not any emojis were detected.
+	Detected bool `json:"detected"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Data        respjson.Field
+		Detected    respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r AIGuardGuardChatCompletionsResponseResultDetectorsEmoji) RawJSON() string {
+	return r.JSON.raw
+}
+
+func (r *AIGuardGuardChatCompletionsResponseResultDetectorsEmoji) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Details about the detected emojis.
+type AIGuardGuardChatCompletionsResponseResultDetectorsEmojiData struct {
+	// The action taken by this Detector
+	Action string `json:"action"`
+	// Detected emojis
+	Emojis []AIGuardGuardChatCompletionsResponseResultDetectorsEmojiDataEmoji `json:"emojis"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Action      respjson.Field
+		Emojis      respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r AIGuardGuardChatCompletionsResponseResultDetectorsEmojiData) RawJSON() string {
+	return r.JSON.raw
+}
+
+func (r *AIGuardGuardChatCompletionsResponseResultDetectorsEmojiData) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type AIGuardGuardChatCompletionsResponseResultDetectorsEmojiDataEmoji struct {
+	Slug string `json:"slug"`
+	Char string `json:"char"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Slug        respjson.Field
+		Char        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r AIGuardGuardChatCompletionsResponseResultDetectorsEmojiDataEmoji) RawJSON() string {
+	return r.JSON.raw
+}
+
+func (r *AIGuardGuardChatCompletionsResponseResultDetectorsEmojiDataEmoji) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 type AIGuardGuardChatCompletionsResponseResultDetectorsLanguage struct {
 	// Details about the detected languages.
 	Data AIGuardGuardChatCompletionsResponseResultDetectorsLanguageData `json:"data"`
@@ -497,6 +569,85 @@ func (r AIGuardGuardChatCompletionsResponseResultDetectorsLanguageData) RawJSON(
 }
 
 func (r *AIGuardGuardChatCompletionsResponseResultDetectorsLanguageData) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidation struct {
+	// Details about the detected MCP validation issues.
+	Data AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidationData `json:"data"`
+	// Whether or not MCP validation issues were detected.
+	Detected bool `json:"detected"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Data        respjson.Field
+		Detected    respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidation) RawJSON() string {
+	return r.JSON.raw
+}
+
+func (r *AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidation) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+// Details about the detected MCP validation issues.
+type AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidationData struct {
+	// The action taken by this Detector
+	Action string `json:"action"`
+	// Detected MCP validation issues
+	Entities []AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidationDataEntity `json:"entities"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Action      respjson.Field
+		Entities    respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidationData) RawJSON() string {
+	return r.JSON.raw
+}
+
+func (r *AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidationData) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidationDataEntity struct {
+	// The type of MCP validation issue detected
+	Type string `json:"type,required"`
+	// The analyzer that detected the issue
+	Analyzer string `json:"analyzer"`
+	// Confidence score of the detection
+	Confidence float64 `json:"confidence"`
+	// Similarity score between tool descriptions
+	Similarity float64 `json:"similarity"`
+	// The value that triggered the detection
+	Value string `json:"value"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Type        respjson.Field
+		Analyzer    respjson.Field
+		Confidence  respjson.Field
+		Similarity  respjson.Field
+		Value       respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidationDataEntity) RawJSON() string {
+	return r.JSON.raw
+}
+
+func (r *AIGuardGuardChatCompletionsResponseResultDetectorsMcpValidationDataEntity) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -792,6 +943,9 @@ type AIGuardGuardChatCompletionsParams struct {
 	SourceIP param.Opt[string] `json:"source_ip,omitzero"`
 	// Location of user or app or agent.
 	SourceLocation param.Opt[string] `json:"source_location,omitzero"`
+	// Unique identifier for the span in distributed tracing, used to track and
+	// correlate AI events across the request lifecycle.
+	SpanID param.Opt[string] `json:"span_id,omitzero"`
 	// For gateway-like integrations with multi-tenant support.
 	TenantID param.Opt[string] `json:"tenant_id,omitzero"`
 	// User/Service account id/service account
